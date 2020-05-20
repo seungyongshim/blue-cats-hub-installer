@@ -1,0 +1,53 @@
+name: Release
+
+on:
+  release:
+    types: [created]
+
+env:
+  LSBEAT_VERSION: v0.3.2
+  GITHUB_TOKEN: ${{ github.token }}
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: windows-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    - id: get_version
+      uses: seungyongshim/get-version-action@v1.3
+    - uses: actions/checkout@v2
+    - name: Get Release
+      id: get_release
+      uses: bruceadams/get-release@v1.2.0   
+    # Runs a single command using the runners shell
+    - name: release 폴더 생성
+      run: |
+        mkdir release
+    - name: 버전 추가
+      run: |
+        get-childitem ./extra -recurse -include *.yml | ForEach-Object {(get-content -encoding utf8 $_.FullName) -replace 'VERSION_INFO_HERE', $env:GITHUB_VERSION | out-file -encoding utf8 $_.FullName}  
+      env:
+        GITHUB_VERSION: ${{ steps.get_version.outputs.version }}
+    
+    - name: Build MSI
+      run: |
+        env
+        ./build build --cid $env:LSBEAT_VERSION --bitness x86 lsbeat
+      env:
+        GITHUB_VERSION: ${{ steps.get_version.outputs.version }}
+    - name: copy MSI
+      run: |
+        Copy-Item "./bin/out/lsbeat/*"  -Destination "./release" -Filter *.msi -Recurse 
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1.0.2
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.get_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+        asset_path: ./release/lsbeat.msi
+        asset_name: lsbeat.msi
+        asset_content_type: application/octet-stream
