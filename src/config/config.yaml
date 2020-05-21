@@ -28,7 +28,7 @@ products:
     description: bluecats-hub
     published_name: Mirero System Beats Lsbeat
     published_url: http://www.mirero.co.kr/
-    published_binaries: [ lsbeat.exe ]
+    published_binaries: [ ]
     mutable_dirs: [ ]
     service: true
 

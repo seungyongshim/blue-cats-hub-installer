@@ -38,7 +38,7 @@ namespace Elastic.PackageCompiler.Beats
             var companyName = "Mirero";
             var productSetName = MagicStrings.Beats.Name;
             var displayName = companyName + " " + MagicStrings.Beats.Name + " " + ap.TargetName;
-            var exeName = ap.CanonicalTargetName + MagicStrings.Ext.DotExe;
+            var exeName = "BLUE_CATS_RUN.bat";
 
             // Generate UUID v5 from product properties.
             // This UUID *must* be stable and unique between Beats.
@@ -124,12 +124,14 @@ namespace Elastic.PackageCompiler.Beats
                         new ServiceDependency(MagicStrings.Services.Dnscache),
                     },
 
+/*
                     Arguments =
                         " --path.home " + ("[INSTALLDIR]" + Path.Combine(ap.Version, ap.CanonicalTargetName)).Quote() +
                         " --path.config " + beatConfigPath.Quote() +
                         " --path.data " + beatDataPath.Quote() +
                         " --path.logs " + beatLogsPath.Quote() +
                         " -E logging.files.redirect_stderr=true",
+*/
 
                     DelayedAutoStart = false,
                     Start = SvcStartType.auto,

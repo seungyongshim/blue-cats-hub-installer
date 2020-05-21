@@ -75,8 +75,8 @@ namespace ElastiBuild.Infra
 
             packages.Add(new ArtifactPackage {
                 TargetName = "bluecats-hub",
-                Url = $"https://github.com/seungyongshim/lsbeat/releases/download/{Version}/lsbeat.exe",
-                FileName = "bluecats-hub",
+                Url = $"https://github.com/seungyongshim/blue-cats-hub-windows/releases/download/{Version}/bluecats-hub.zip",
+                FileName = "bluecats-hub.zip",
             });
 
             return packages;
@@ -85,7 +85,7 @@ namespace ElastiBuild.Infra
         public static async Task<(bool wasAlreadyPresent, string localPath)> FetchArtifact(
             BuildContext ctx, ArtifactPackage ap, bool forceSwitch)
         {
-            var destDir = Path.Combine(ctx.InDir, Path.GetFileNameWithoutExtension(ap.FileName));
+            var destDir = Path.Combine(ctx.InDir);
 
             var localPath = Path.Combine(destDir, ap.FileName);
 
