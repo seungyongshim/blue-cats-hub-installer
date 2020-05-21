@@ -71,12 +71,12 @@ namespace ElastiBuild.Infra
 
             var packages = new List<ArtifactPackage>();
 
-            var Version = Environment.GetEnvironmentVariable("LSBEAT_VERSION");
+            var Version = Environment.GetEnvironmentVariable("BLUECATS_HUB_VERSION");
 
             packages.Add(new ArtifactPackage {
-                TargetName = "lsbeat",
+                TargetName = "bluecats-hub",
                 Url = $"https://github.com/seungyongshim/lsbeat/releases/download/{Version}/lsbeat.exe",
-                FileName = "lsbeat",
+                FileName = "bluecats-hub",
             });
 
             return packages;

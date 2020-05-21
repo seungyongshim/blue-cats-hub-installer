@@ -25,10 +25,10 @@ namespace Elastic.PackageCompiler.Beats
 
             var ap = new ArtifactPackage()
             {
-                TargetName = "lsbeat",
-                CanonicalTargetName = "lsbeat",
-                Architecture = MagicStrings.Arch.x86,
-                Version = Environment.GetEnvironmentVariable("GITHUB_VERSION").Trim('v'),
+                TargetName = "bluecats-hub",
+                CanonicalTargetName = "bluecats-hub",
+                Architecture = MagicStrings.Arch.x86_64,
+                Version = Environment.GetEnvironmentVariable("BLUECATS_HUB_VERSION").Trim('v'),
             };
 
             Console.WriteLine(ap.ToString());
