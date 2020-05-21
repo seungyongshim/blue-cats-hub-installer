@@ -38,7 +38,7 @@ jobs:
         ./build build --cid $env:BLUECATS_HUB_VERSION --bitness x64 hub
     - name: copy MSI
       run: |
-        Copy-Item "./bin/out/hub/*"  -Destination "./release" -Filter *.msi -Recurse 
+        Copy-Item "./bin/out/*/*"  -Destination "./release" -Filter *.msi -Recurse 
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
       with:
