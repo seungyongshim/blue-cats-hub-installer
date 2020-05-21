@@ -26,6 +26,16 @@ namespace ElastiBuild.BullseyeTargets
             foreach (var itm in zf.Entries)
             {
                 var fname = itm.FileName;
+                if (itm.IsDirectory)
+                {
+                    Directory.CreateDirectory(
+                        Path.Combine(destDir, fname));
+                }
+            }
+
+            foreach (var itm in zf.Entries)
+            {
+                var fname = itm.FileName;
 
                 if (itm.IsDirectory)
                 {
