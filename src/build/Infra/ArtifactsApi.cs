@@ -75,7 +75,7 @@ namespace ElastiBuild.Infra
 
             packages.Add(new ArtifactPackage {
                 TargetName = "bluecats-hub",
-                Url = $"https://github.com/seungyongshim/blue-cats-hub-windows/releases/download/{Version}/bluecats-hub.zip",
+                Url = $"https://github.com/seungyongshim/blue-cats-hub-windows/releases/download/{Version}/bluecats_hub.zip",
                 FileName = "bluecats-hub.zip",
             });
 
