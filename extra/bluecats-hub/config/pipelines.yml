@@ -1,0 +1,29 @@
+- pipeline.id: 7700-listen-beats
+  pipeline.workers: 4
+  queue.type: persisted
+  queue.max_bytes: 1gb
+  config.string: | 
+    input {
+      beats {
+        port => 7700
+      }
+    }
+
+    filter{
+      mutate {
+        add_field => { "[beat][full_name]" => "%{[@metadata][beat]}-%{[beat][version]}-%{[host][os][platform]}" }
+        add_field => { "[beat][name]" => "%{[@metadata][beat]}" }
+        lowercase => [ "[tags]" ]
+      }
+    }
+
+    output {
+      if ("" in [mirero][kafka_topic]) {
+        kafka {
+          bootstrap_servers => "${BLUECATS_KAFKA_HOST}"
+          max_request_size => 15728640
+          codec => json
+          topic_id => "%{[mirero][kafka_topic]}"
+        }
+      }
+    }

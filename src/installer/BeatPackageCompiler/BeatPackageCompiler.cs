@@ -18,6 +18,8 @@ namespace Elastic.PackageCompiler.Beats
         {
             var opts = CmdLineOptions.Parse(args);
 
+            Compiler.AutoGeneration.LegacyDefaultIdAlgorithm = true;
+
             var config = BuildConfiguration.Read(
                 Path.Combine(opts.ConfigDir, MagicStrings.Files.ConfigYaml));
 
@@ -95,6 +97,7 @@ namespace Elastic.PackageCompiler.Beats
 
 
             var beatConfigPath = "[CommonAppDataFolder]" + Path.Combine(companyName, productSetName, ap.CanonicalTargetName);
+            var beatSettingsPath = Path.Combine(beatConfigPath, "config");
             var beatDataPath = Path.Combine(beatConfigPath, "data");
             var beatLogsPath = Path.Combine(beatConfigPath, "logs");
 
@@ -124,15 +127,6 @@ namespace Elastic.PackageCompiler.Beats
                         new ServiceDependency(MagicStrings.Services.Dnscache),
                     },
 
-/*
-                    Arguments =
-                        " --path.home " + ("[INSTALLDIR]" + Path.Combine(ap.Version, ap.CanonicalTargetName)).Quote() +
-                        " --path.config " + beatConfigPath.Quote() +
-                        " --path.data " + beatDataPath.Quote() +
-                        " --path.logs " + beatLogsPath.Quote() +
-                        " -E logging.files.redirect_stderr=true",
-*/
-
                     DelayedAutoStart = false,
                     Start = SvcStartType.auto,
 
@@ -144,10 +138,12 @@ namespace Elastic.PackageCompiler.Beats
 
             project.RegValues = new RegValue[]
             {
-                new RegValue(RegistryHive.LocalMachine, $@"SYSTEM\CurrentControlSet\Services\{ap.CanonicalTargetName}\Parameters", "Application", $@"[INSTALLDIR]{ap.Version}\{ap.CanonicalTargetName}\BLUE_CATS_RUN.bat"),
-                new RegValue(RegistryHive.LocalMachine, $@"SYSTEM\CurrentControlSet\Services\{ap.CanonicalTargetName}\Parameters", "AppDirectory", $@"[INSTALLDIR]{ap.Version}\{ap.CanonicalTargetName}"),
-                new RegValue(RegistryHive.LocalMachine, $@"SYSTEM\CurrentControlSet\Services\{ap.CanonicalTargetName}\Parameters", "AppParameters", $@""),
-                new RegValue(RegistryHive.LocalMachine, $@"SYSTEM\CurrentControlSet\Services\{ap.CanonicalTargetName}\Parameters\AppExit", "Restart"),
+                new RegValue(RegistryHive.LocalMachine, $@"SYSTEM\CurrentControlSet\Services\{ap.CanonicalTargetName}\Parameters", "Application", 
+                  $@"[INSTALLDIR]{ap.Version}\{ap.CanonicalTargetName}\bin\logstash.bat"),
+                new RegValue(RegistryHive.LocalMachine, $@"SYSTEM\CurrentControlSet\Services\{ap.CanonicalTargetName}\Parameters", "AppDirectory", 
+                  $@"[INSTALLDIR]{ap.Version}\{ap.CanonicalTargetName}"),
+                new RegValue(RegistryHive.LocalMachine, $@"SYSTEM\CurrentControlSet\Services\{ap.CanonicalTargetName}\Parameters", "AppParameters", 
+                  $@"--path.settings {beatSettingsPath.Quote()} --path.data {beatDataPath.Quote()}  --path.logs {beatLogsPath.Quote()}"),
             };
             
 
