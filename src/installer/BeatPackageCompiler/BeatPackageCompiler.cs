@@ -28,7 +28,7 @@ namespace Elastic.PackageCompiler.Beats
                 TargetName = "bluecats-hub",
                 CanonicalTargetName = "bluecats-hub",
                 Architecture = MagicStrings.Arch.x86_64,
-                Version = Environment.GetEnvironmentVariable("BLUECATS_HUB_VERSION").Trim('v'),
+                Version = Environment.GetEnvironmentVariable("GITHUB_VERSION").Trim('v'),
             };
 
             Console.WriteLine(ap.ToString());
