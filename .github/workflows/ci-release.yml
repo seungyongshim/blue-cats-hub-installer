@@ -5,7 +5,7 @@ on:
     types: [created]
 
 env:
-  LSBEAT_VERSION: v0.3.2
+  BLUECATS_HUB_VERSION: v0.2.0
   GITHUB_TOKEN: ${{ github.token }}
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -23,7 +23,6 @@ jobs:
     - name: Get Release
       id: get_release
       uses: bruceadams/get-release@v1.2.0   
-    # Runs a single command using the runners shell
     - name: release 폴더 생성
       run: |
         mkdir release
@@ -32,16 +31,15 @@ jobs:
         get-childitem ./extra -recurse -include *.yml | ForEach-Object {(get-content -encoding utf8 $_.FullName) -replace 'VERSION_INFO_HERE', $env:GITHUB_VERSION | out-file -encoding utf8 $_.FullName}  
       env:
         GITHUB_VERSION: ${{ steps.get_version.outputs.version }}
-    
     - name: Build MSI
       run: |
         env
-        ./build build --cid $env:LSBEAT_VERSION --bitness x86 lsbeat
+        ./build build --cid $env:BLUECATS_HUB_VERSION --bitness x64 hub
       env:
         GITHUB_VERSION: ${{ steps.get_version.outputs.version }}
     - name: copy MSI
       run: |
-        Copy-Item "./bin/out/lsbeat/*"  -Destination "./release" -Filter *.msi -Recurse 
+        Copy-Item "./bin/out/*/*"  -Destination "./release" -Filter *.msi -Recurse 
     - name: Upload Release Asset
       uses: actions/upload-release-asset@v1.0.2
       env:
