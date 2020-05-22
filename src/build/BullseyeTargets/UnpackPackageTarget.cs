@@ -16,10 +16,13 @@ namespace ElastiBuild.BullseyeTargets
 
             var destDir = Path.Combine(ctx.InDir, Path.GetFileNameWithoutExtension(ap.FileName));
 
-            using var zf = ZipFile.Open(Path.Combine(ctx.InDir, ap.FileName),ZipArchiveMode.Read);
+            var di = new DirectoryInfo(destDir);
 
-            zf.ExtractToDirectory(destDir);
-
+            if(!di.Exists)
+            {
+                using var zf = ZipFile.Open(Path.Combine(ctx.InDir, ap.FileName),ZipArchiveMode.Read);
+                zf.ExtractToDirectory(destDir);
+            }
             await Console.Out.WriteLineAsync($"Extracted to: {destDir}");
         }
     }

@@ -38,7 +38,7 @@ namespace Elastic.PackageCompiler.Beats
             var companyName = "Mirero";
             var productSetName = MagicStrings.Beats.Name;
             var displayName = companyName + " " + MagicStrings.Beats.Name + " " + ap.TargetName;
-            var exeName = "BLUE_CATS_RUN.bat";
+            var exeName = "nssm.exe";
 
             // Generate UUID v5 from product properties.
             // This UUID *must* be stable and unique between Beats.
@@ -142,6 +142,15 @@ namespace Elastic.PackageCompiler.Beats
                 };
             }
 
+            project.RegValues = new RegValue[]
+            {
+                new RegValue(RegistryHive.LocalMachine, $@"SYSTEM\CurrentControlSet\Services\{ap.CanonicalTargetName}\Parameters", "Application", $@"[INSTALLDIR]{ap.Version}\{ap.CanonicalTargetName}\BLUE_CATS_RUN.bat"),
+                new RegValue(RegistryHive.LocalMachine, $@"SYSTEM\CurrentControlSet\Services\{ap.CanonicalTargetName}\Parameters", "AppDirectory", $@"[INSTALLDIR]{ap.Version}\{ap.CanonicalTargetName}"),
+                new RegValue(RegistryHive.LocalMachine, $@"SYSTEM\CurrentControlSet\Services\{ap.CanonicalTargetName}\Parameters", "AppParameters", $@""),
+                new RegValue(RegistryHive.LocalMachine, $@"SYSTEM\CurrentControlSet\Services\{ap.CanonicalTargetName}\Parameters\AppExit", "Restart"),
+            };
+            
+
             var packageContents = new List<WixEntity>
             {
                 new DirFiles(Path.Combine(opts.PackageInDir, MagicStrings.Files.All), path =>
@@ -240,6 +249,8 @@ namespace Elastic.PackageCompiler.Beats
                             , new DirPermission("Users", "[MachineName]", GenericPermission.All)
                             )))
             };
+            
+            
 
             // CLI Shim path
             project.Add(new EnvironmentVariable("PATH", Path.Combine(beatsInstallPath, ap.Version))
