@@ -5,7 +5,7 @@ on:
     types: [created]
 
 env:
-  BLUECATS_HUB_VERSION: v0.2.0
+  BLUECATS_HUB_VERSION: v0.3.2
   GITHUB_TOKEN: ${{ github.token }}
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
