@@ -24,9 +24,9 @@ products:
     mutable_dirs: [ ]
     service: true
 
-  bluecats-hub:
-    description: bluecats-hub
-    published_name: Mirero System Beats Lsbeat
+  collectbeat:
+    description: collectbeat
+    published_name: Mirero System Beats Collectbeat
     published_url: http://www.mirero.co.kr/
     published_binaries: [ ]
     mutable_dirs: [ ]
