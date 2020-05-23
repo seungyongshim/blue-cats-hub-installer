@@ -5,7 +5,7 @@ on:
     types: [created]
 
 env:
-  BLUECATS_HUB_VERSION: v0.3.2
+  BLUECATS_HUB_VERSION: v0.4.0
   GITHUB_TOKEN: ${{ github.token }}
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -34,7 +34,7 @@ jobs:
     - name: Build MSI
       run: |
         env
-        ./build build --cid $env:BLUECATS_HUB_VERSION --bitness x64 hub
+        ./build build --cid $env:BLUECATS_HUB_VERSION --bitness x64 collectbeat
       env:
         GITHUB_VERSION: ${{ steps.get_version.outputs.version }}
     - name: copy MSI
