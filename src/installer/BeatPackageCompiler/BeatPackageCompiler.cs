@@ -27,8 +27,8 @@ namespace Elastic.PackageCompiler.Beats
 
             var ap = new ArtifactPackage()
             {
-                TargetName = "bluecats-hub",
-                CanonicalTargetName = "bluecats-hub",
+                TargetName = "collectbeat",
+                CanonicalTargetName = "collectbeat",
                 Architecture = MagicStrings.Arch.x86_64,
                 Version = Environment.GetEnvironmentVariable("GITHUB_VERSION").Trim('v'),
             };
