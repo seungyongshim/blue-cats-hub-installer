@@ -141,13 +141,13 @@ namespace Elastic.PackageCompiler.Beats
                 new RegValue(RegistryHive.LocalMachine, $@"SYSTEM\CurrentControlSet\Services\{ap.CanonicalTargetName}\Parameters", "Application", 
                   $@"[INSTALLDIR]{ap.Version}\{ap.CanonicalTargetName}\bin\logstash.bat"),
                 new RegValue(RegistryHive.LocalMachine, $@"SYSTEM\CurrentControlSet\Services\{ap.CanonicalTargetName}\Parameters", "AppDirectory", 
-                  $@"[INSTALLDIR]{ap.Version}\{ap.CanonicalTargetName}"),
+                  $@"[INSTALLDIR]{ap.Version}\{ap.CanonicalTargetName}\bin"),
                 new RegValue(RegistryHive.LocalMachine, $@"SYSTEM\CurrentControlSet\Services\{ap.CanonicalTargetName}\Parameters", "AppParameters", 
                   $@"--path.settings {beatSettingsPath.Quote()} --path.data {beatDataPath.Quote()}  --path.logs {beatLogsPath.Quote()}"),
                 new RegValue(RegistryHive.LocalMachine, $@"SYSTEM\CurrentControlSet\Services\{ap.CanonicalTargetName}\Parameters", "AppStderr", 
-                  $@"{beatLogsPath.Quote()}\service.log"),
+                  $@"""{beatLogsPath}\service_stderr.log"""),
                 new RegValue(RegistryHive.LocalMachine, $@"SYSTEM\CurrentControlSet\Services\{ap.CanonicalTargetName}\Parameters", "AppStdout", 
-                  $@"{beatLogsPath.Quote()}\service.log"),
+                  $@"""{beatLogsPath}\service_stdout.log"""),
             };
             
 
