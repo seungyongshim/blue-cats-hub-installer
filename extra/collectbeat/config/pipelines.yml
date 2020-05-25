@@ -27,3 +27,34 @@
         }
       }
     }
+- pipeline.id: alive
+  pipeline.workers: 1
+  config.string: | 
+    input {
+      heartbeat {
+        id => "bluecats-logstash-hoya"
+        interval => 30
+        add_field => { "[beat][version]" => "VERSION_INFO_HERE" }
+        add_field => { "[beat][full_name]" => "collectbeat-VERSION_INFO_HERE-windows" }
+        add_field => { "[beat][name]" => "collectbeat" }
+        add_field => { "[mirero][kafka_topic]" => "collectbeat" }
+        add_tag => {"${BLUECATS_SITE}"}
+      }
+    }
+    
+    filter{
+      mutate {
+        lowercase => [ "[tags]" ]
+      }
+    }
+
+    output {
+      if ("" in [mirero][kafka_topic]) {
+        kafka {
+          bootstrap_servers => "${BLUECATS_KAFKA_HOST}"
+          max_request_size => 15728640
+          codec => json
+          topic_id => "%{[mirero][kafka_topic]}"
+        }
+      }
+    }    
