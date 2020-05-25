@@ -145,9 +145,7 @@ namespace Elastic.PackageCompiler.Beats
                 new RegValue(RegistryHive.LocalMachine, $@"SYSTEM\CurrentControlSet\Services\{ap.CanonicalTargetName}\Parameters", "AppParameters", 
                   $@"--path.settings {beatSettingsPath.Quote()} --path.data {beatDataPath.Quote()}  --path.logs {beatLogsPath.Quote()}"),
                 new RegValue(RegistryHive.LocalMachine, $@"SYSTEM\CurrentControlSet\Services\{ap.CanonicalTargetName}\Parameters", "AppStderr", 
-                  $@"""{beatLogsPath}\service_stderr.log"""),
-                new RegValue(RegistryHive.LocalMachine, $@"SYSTEM\CurrentControlSet\Services\{ap.CanonicalTargetName}\Parameters", "AppStdout", 
-                  $@"""{beatLogsPath}\service_stdout.log"""),
+                  $@"""{beatConfigPath}\service_stderr.log"""),
             };
             
 
