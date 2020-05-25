@@ -38,7 +38,7 @@
         add_field => { "[beat][full_name]" => "collectbeat-VERSION_INFO_HERE-windows" }
         add_field => { "[beat][name]" => "collectbeat" }
         add_field => { "[mirero][kafka_topic]" => "collectbeat" }
-        add_tag => ["${BLUECATS_SITE}"]
+        tags => ["${BLUECATS_SITE}"]
       }
     }
     
