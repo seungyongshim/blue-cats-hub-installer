@@ -35,7 +35,7 @@
         id => "bluecats-logstash-hoya"
         interval => 30
         add_field => { "[beat][version]" => "VERSION_INFO_HERE" }
-        add_field => { "[beat][full_name]" => "collectbeat-VERSION_INFO_HERE-linux" }
+        add_field => { "[beat][full_name]" => "collectbeat-VERSION_INFO_HERE-windows" }
         add_field => { "[beat][name]" => "collectbeat" }
         add_field => { "[mirero][kafka_topic]" => "collectbeat" }
         tags => ["${BLUECATS_SITE}"]
@@ -45,12 +45,11 @@
     filter{
       mutate {
         lowercase => [ "[tags]" ]
+        add_field => { "[@metadata][host]" => "%{[host]}" }
         remove_field => [ "host" ]
       }      
-      ruby {
-        init => "require 'socket'"
-        code => "event.set('[host][name]', Socket.gethostname)"
-        
+      mutate {
+        add_field => { "[host][name]" => "%{[@metadata][host]}" }
       }
     }
 
