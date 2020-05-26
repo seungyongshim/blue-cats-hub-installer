@@ -34,8 +34,8 @@
       heartbeat {
         id => "bluecats-logstash-hoya"
         interval => 30
-        add_field => { "[beat][version]" => "${GITVERSION}" }
-        add_field => { "[beat][full_name]" => "collectbeat-${GITVERSION}-linux" }
+        add_field => { "[beat][version]" => "VERSION_INFO_HERE" }
+        add_field => { "[beat][full_name]" => "collectbeat-VERSION_INFO_HERE-linux" }
         add_field => { "[beat][name]" => "collectbeat" }
         add_field => { "[mirero][kafka_topic]" => "collectbeat" }
         tags => ["${BLUECATS_SITE}"]
