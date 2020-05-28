@@ -6,7 +6,7 @@ on:
 
 env:
   GITHUB_TOKEN: ${{ github.token }}
-  BLUECATS_HUB_VERSION: v0.5.0
+  BLUECATS_HUB_VERSION: v0.5.5
 
 jobs:
   build:

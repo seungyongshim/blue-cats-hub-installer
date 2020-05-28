@@ -7,7 +7,7 @@ on:
 
 env:
   GITHUB_VERSION: 0.0.0
-  BLUECATS_HUB_VERSION: v0.5.0
+  BLUECATS_HUB_VERSION: v0.5.5
 
 jobs:
   build:
