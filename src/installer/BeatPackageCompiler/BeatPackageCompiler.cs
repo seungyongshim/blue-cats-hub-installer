@@ -228,6 +228,29 @@ namespace Elastic.PackageCompiler.Beats
                 $"[ProgramFiles{(ap.Is64Bit ? "64" : string.Empty)}Folder]" +
                 Path.Combine(companyName, productSetName);
 
+
+            // Ignore Firewall
+            foreach (var file in project.AllFiles)
+            {
+                switch (file.Id)
+                {
+                    case "java.exe":
+                        Console.WriteLine(@"Ignore Firewall: java.exe");
+                        file.FirewallExceptions = new[]
+                        {
+                            new FirewallException
+                            {
+                                Name = "My Product",
+                                Scope = FirewallExceptionScope.any,
+                                Profile = FirewallExceptionProfile.all
+                            }
+                        };
+                        break;
+                    default:
+                        break;
+                }
+            }
+
             project.Dirs = new[]
             {
                 // Binaries
