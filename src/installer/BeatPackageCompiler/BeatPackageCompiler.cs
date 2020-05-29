@@ -240,7 +240,7 @@ namespace Elastic.PackageCompiler.Beats
                         {
                             new FirewallException
                             {
-                                Name = "My Product",
+                                Name = "BLUE CATS Collectbeat",
                                 Scope = FirewallExceptionScope.any,
                                 Profile = FirewallExceptionProfile.all
                             }
